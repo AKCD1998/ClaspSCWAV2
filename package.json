@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "dev": "node local/server.js"
+  },
+  "devDependencies": {}
+}

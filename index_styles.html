@@ -1,0 +1,286 @@
+﻿/* ===== Summary screen polish (non-breaking) ===== */
+#screen-summary{
+  --ss-bg:#0b1424;           /* พื้นหลังหน้าจอ */
+  --ss-panel:#0f1b2e;        /* แผง/การ์ด */
+  --ss-ink:#e5e7eb;          /* ตัวอักษรหลัก */
+  --ss-dim:#9aa4b2;          /* ตัวอักษรรอง */
+  --ss-accent:#22c55e;       /* ปุ่มหลัก */
+  --ss-accent-2:#10b981;     /* ปุ่มรอง */
+  --ss-edge:#1f2a44;         /* เส้นขอบ */
+  --ss-hover:#17233a;        /* hover bg */
+  --ss-badge:#0ea5e9;        /* ปุ่ม preset */
+  color:var(--ss-ink);
+}
+
+/* container */
+#screen-summary .lookup-head{
+  display:flex;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  padding:14px 16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.03),transparent);
+  border:1px solid var(--ss-edge);
+  border-radius:14px;
+}
+
+/* headings */
+#screen-summary h2{
+  margin:0 8px 0 0;
+  font-size:20px;
+  line-height:1.3;
+  letter-spacing:.2px;
+  font-weight:700;
+}
+
+/* labels + inputs */
+#screen-summary .lookup-head label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--ss-dim);
+  font-size:14px;
+}
+#screen-summary .lookup-head input[type="date"],
+#screen-summary .lookup-head select{
+  appearance:none;
+  background:var(--ss-panel);
+  border:1px solid var(--ss-edge);
+  color:var(--ss-ink);
+  padding:8px 10px;
+  border-radius:10px;
+  outline:none;
+  transition:border .15s, background .15s;
+}
+#screen-summary .lookup-head input[type="date"]:focus,
+#screen-summary .lookup-head select:focus{
+  border-color:var(--ss-badge);
+  box-shadow:0 0 0 3px rgba(14,165,233,.15);
+}
+
+/* base button (คง class .btn เดิมไว้) */
+#screen-summary .lookup-head .btn{
+  border:1px solid var(--ss-edge);
+  background:var(--ss-panel);
+  color:var(--ss-ink);
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .06s ease, background .15s, border .15s;
+  white-space:nowrap;
+}
+#screen-summary .lookup-head .btn:hover{
+  background:var(--ss-hover);
+}
+#screen-summary .lookup-head .btn:active{
+  transform:translateY(1px);
+}
+
+/* ปุ่มหลัก (ดูสรุป) */
+#screen-summary .lookup-head .btn:first-of-type{
+  background:var(--ss-accent);
+  color:#0b1424;
+  border-color:#15803d;
+}
+
+/* ปุ่ม preset: วันนี้ / 7 วันล่าสุด / เดือนนี้… */
+#screen-summary .lookup-head .btn:nth-of-type(2),
+#screen-summary .lookup-head .btn:nth-of-type(3),
+#screen-summary .lookup-head .btn:nth-of-type(4){
+  background:rgba(14,165,233,.12);
+  border-color:rgba(14,165,233,.35);
+  color:#ccecff;
+}
+#screen-summary .lookup-head .btn:nth-of-type(2):hover,
+#screen-summary .lookup-head .btn:nth-of-type(3):hover,
+#screen-summary .lookup-head .btn:nth-of-type(4):hover{
+  background:rgba(14,165,233,.18);
+}
+
+/* ปุ่มส่งออก CSV */
+#screen-summary .lookup-head .btn:last-of-type{
+  background:rgba(34,197,94,.14);
+  border-color:#14532d;
+  color:#b7f7c9;
+}
+
+/* ตาราง */
+#sumTbl{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  color:var(--ss-ink);
+  background:var(--ss-panel);
+}
+#sumTbl thead th{
+  position:sticky; top:0; z-index:1;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border-bottom:1px solid var(--ss-edge);
+  padding:12px 10px;
+  text-align:left;
+  font-size:13px;
+  letter-spacing:.3px;
+}
+#sumTbl tbody td{
+  padding:10px;
+  border-bottom:1px dashed rgba(148,163,184,.18);
+  vertical-align:middle;
+  font-size:14px;
+}
+#sumTbl tbody tr:hover{
+  background:rgba(255,255,255,.03);
+}
+#sumTbl tfoot th{
+  position:sticky; bottom:0;
+  background:linear-gradient(0deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border-top:1px solid var(--ss-edge);
+  padding:12px 10px;
+  font-weight:700;
+}
+
+/* จัดแนวคอลัมน์ตามประเภทข้อมูล */
+#sumTbl col:nth-child(1),
+#sumTbl col:nth-child(2){ text-align:right }
+#sumTbl td:nth-child(1),
+#sumTbl td:nth-child(2),
+#sumTbl td:nth-child(6),
+#sumTbl td:nth-child(7){
+  font-variant-numeric:tabular-nums;
+  text-align:right;
+}
+#sumTbl td:nth-child(8){ color:var(--ss-dim) }
+
+/* กรอบตาราง */
+#screen-summary .lookup-left > div[style*="border:1px"]{
+  border:1px solid var(--ss-edge) !important;
+  background:var(--ss-panel);
+  box-shadow:0 8px 24px rgba(2,8,23,.35);
+}
+
+/* หมายเหตุ KPI ใต้ตาราง */
+#sumNote{
+  color:var(--ss-dim);
+  font-size:13px;
+  padding:6px 2px;
+}
+
+/* checkbox สวยขึ้น (ไม่แตะ HTML) */
+#sumHideZero{
+  appearance:none; width:16px; height:16px; border-radius:4px;
+  border:1px solid var(--ss-edge); display:inline-grid; place-content:center;
+  background:var(--ss-panel); margin-right:4px;
+}
+#sumHideZero:checked{
+  background:var(--ss-accent);
+  border-color:#15803d;
+}
+#sumHideZero:checked::after{
+  content:""; width:10px; height:10px; background:#0b1424; border-radius:2px;
+}
+
+/* responsive */
+@media (max-width: 960px){
+  #screen-summary .lookup-head{ gap:8px 10px; }
+  #screen-summary h2{ flex-basis:100%; margin-bottom:2px; }
+  #screen-summary .lookup-head label{ font-size:13px; }
+  #screen-summary .lookup-head .btn{ padding:8px 12px; border-radius:10px; }
+  #sumTbl thead th, #sumTbl tbody td{ padding:8px 8px; }
+}
+/* จัดหัวตารางให้อยู่กึ่งกลางทั้งหมด */
+#sumTbl thead th{
+  text-align:center !important;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+/* === FIX 1: จัดระดับแนวตั้งของทุกชิ้นในแถบหัวให้เสมอกัน === */
+#screen-summary .lookup-head{
+  align-items: center;   /* เดิม flex-end → center */
+}
+
+/* === FIX 2: normalize ความสูง/ระยะขอบของคอนโทรล === */
+#screen-summary .lookup-head label{
+  margin: 0;             /* กัน label แต่ละตัวสูง/ต่ำไม่เท่ากัน */
+}
+
+#screen-summary .lookup-head select,
+#screen-summary .lookup-head input[type="date"]{
+  height: 38px;          /* กำหนดความสูงเดียวกัน */
+  line-height: 38px;     /* ให้ตัวอักษรอยู่กึ่งกลางแนวตั้ง */
+  padding: 10px 12px;    /* สัมผัสนิ้ว/เม้าส์กำลังดี */
+  border-radius: 10px;   /* คงโค้งมนเดิม */
+}
+
+/* กำหนดความกว้าง select ของ "สาขา" ให้เสถียร */
+#screen-summary .lookup-head .branch-filter select{
+  min-width: 200px;
+  font-size: 16px;
+}
+
+/* ปุ่มให้สูงเท่าคอนโทรลอื่น และตัวอักษรอยู่กลาง */
+#screen-summary .lookup-head .btn{
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* (ถ้าอยากให้หัวตารางกึ่งกลาง แต่คอลัมน์ชื่อสินค้าชิดซ้าย) */
+#sumTbl thead th{
+  text-align: center !important;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+#sumTbl thead th:nth-child(4){
+  text-align: left !important; /* "ชื่อสินค้า" อ่านง่ายขึ้น */
+}
+
+/* ย่อขนาดตัวอักษร + เพิ่มความสูงกล่องให้โปร่งขึ้น */
+#screen-summary .lookup-head .branch-filter select{
+  font-size: 15px;      /* จาก 16 → 15 ช่วยให้หัวไม่ชนขอบ */
+  height: 42px;         /* จาก 38 → 42 เว้น headroom ให้วรรณยุกต์ */
+  line-height: normal;  /* ห้าม fix เป็น 38px เพราะจะกดหัวอักษร */
+  padding: 8px 12px;    /* เว้นรอบ ๆ พอประมาณ */
+}
+/* ฆ่าพื้นหลัง/กรอบ/เงา ของกริดในหน้า chooser ไม่ว่าใช้คลาสอะไร */
+#screen-chooser .grid,
+#screen-chooser .chooser-grid,
+#screen-chooser [class*="grid"]{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  padding: 0;
+}
+
+/* กำหนดเลย์เอาต์กริดให้เรียบร้อย */
+#screen-chooser .chooser-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 22px;
+}
+
+/* กันกรณี card มี margin ทำให้เห็นพื้นหลังพ่อ */
+#screen-chooser .chooser-grid .card{ margin: 0; }
+
+/* กัน pseudo-element ที่อาจถูกใส่ไว้ในสไตล์เก่า */
+#screen-chooser .grid::before,
+#screen-chooser .grid::after,
+#screen-chooser .chooser-grid::before,
+#screen-chooser .chooser-grid::after{ content: none !important; }
+
+#tbl td.warn-cell {
+  max-width: 260px;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  vertical-align: top;
+  color: #444;
+  font-weight: 400;
+}
+
+#tbl td.warn-cell.has-warning {
+  color: #b91c1c;      /* แดงเตือน */
+  font-weight: 600;
+}
+
