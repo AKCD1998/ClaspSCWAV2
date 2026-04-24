@@ -1,0 +1,1549 @@
+
+/* ===============================
+   MAIN THEME (global)
+   =============================== */
+
+:root{
+  --bg:#0b1220;
+  --panel:#0f2334;
+  --surface:#132c44;
+  --border:#1b3a52;
+  --text:#e7f0fb;
+  --muted:#a9bbcb;
+  --accent:#12b7e7;
+}
+
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg) !important;
+  color:var(--ink);
+  color:var(--text);
+  font-family:system-ui,Segoe UI,Roboto,"TH Sarabun New",sans-serif;
+}
+
+/* Utilities */
+.hidden{ display:none !important; }
+
+/* Containers */
+.container,
+.container--wide{
+  background:linear-gradient(180deg, rgba(19,44,68,.96), rgba(11,26,40,.96)) !important;
+  color:var(--text) !important;
+  border:1px solid var(--border);
+  margin:10px auto !important;
+}
+.container{ max-width: 1200px; padding: 24px; border-radius: 12px; }
+.container--wide{max-width:1600px;padding:20px;border-radius:12px}
+
+/* Cards & buttons */
+.card{background:linear-gradient(180deg,#0f6a8a,#0d3b52) !important;color:#fff;border-radius:16px;padding:28px;text-align:center}
+.btn{background:#22c55e !important;color:#fff !important;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 18px;font-size:16px;cursor:pointer}
+.btn.btn--go{background:#22c55e !important}
+
+/* Inputs (outside tables) */
+input:not(table *),
+select:not(table *){
+  background:var(--surface) !important;
+  color:var(--text) !important;
+  border:1px solid var(--border) !important;
+}
+
+/* Headings / notes */
+.lookup-head h2{color:var(--text);margin:0}
+#total,.kpi-note{color:var(--muted) !important}
+
+.lookup-toolbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:8px}
+.lookup-toolbar .filters{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.icon-btn{border:none; background:#111827; color:#fff; padding:8px 12px; border-radius:10px; cursor:pointer}
+.icon-btn:hover{opacity:.9}
+
+/* Home chooser layout */
+#screen-chooser .grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
+  gap:28px;
+  align-items:stretch;
+}
+#screen-chooser .grid .card{
+  min-height: 120px;            /* tweak to taste */
+}
+
+/* Keep the third card full width, under the grid */
+#screen-chooser > .card{
+  margin-top:24px;               /* you already had this */
+}
+
+/* Responsive: collapse to 1 column on narrow screens */
+@media (max-width: 1100px){
+  #screen-chooser .grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* ===============================
+   TABLES (shared)
+   =============================== */
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th{background:#2a2a2a;color:#fff;position:sticky;top:0;font-size:14px;font-weight:600}
+td{
+  padding:10px 12px;border-bottom:1px solid #e5e7eb;
+  text-align:center !important;vertical-align:middle;
+  color:#000;background:#fff;overflow-wrap:anywhere;word-break:break-word;
+}
+td{font-size:13px}
+
+/* Pills (drug list) */
+.drug-list{display:flex;flex-wrap:wrap;gap:6px}
+.pill{display:inline-block;padding:4px 8px;border:1px solid #e5e7eb;border-radius:999px;background:#f8fafc;color:#111;font-size:12px}
+
+/* ===============================
+   SIDEBAR / NAV
+   =============================== */
+:root{ --sidebar-w:260px }
+.hamburger{position:fixed;left:16px;top:14px;z-index:1100;width:40px;height:40px;border-radius:10px;border:1px solid #2f2f2f;background:#1f1f1f;color:#eaeaea;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.hamburger{background:#0f1d2a !important;color:#e7f0fb !important;border:1px solid var(--border)}
+.hamburger span{display:block;width:20px;height:2px;background:#eaeaea;position:relative}
+.hamburger span::before,.hamburger span::after{content:"";position:absolute;left:0;width:20px;height:2px;background:#eaeaea}
+.hamburger span::before{top:-6px}.hamburger span::after{top:6px}
+
+#sidebar{position:fixed;z-index:1099;left:0;top:0;height:100vh;width:var(--sidebar-w);background:#0e1b29 !important;color:#e7f0fb !important;border-right:1px solid var(--border);transform:translateX(-100%);transition:transform .25s ease;display:flex;flex-direction:column;padding:18px 14px 14px}
+#sidebar .brand{font-weight:700;margin:4px 6px 12px;margin-left:60px;font-size:18px}
+#sidebar nav{display:flex;flex-direction:column;gap:8px}
+#sidebar a{text-decoration:none;color:#e7f0fb !important;background:#12283a !important;border:1px solid var(--border) !important;padding:10px 12px;border-radius:10px;display:flex;align-items:center;gap:8px}
+#sidebar a:hover{background:#163247 !important}
+
+#backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1090;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease}
+body.sidebar-open #backdrop{opacity:1;visibility:visible;pointer-events:auto}
+#sidebar{transform:translateX(-100%);transition:transform .25s ease}
+body.sidebar-open #sidebar{transform:translateX(0)}
+
+/* ===============================
+   LOOKUP LAYOUT
+   =============================== */
+.lookup-grid{display:grid;grid-template-columns:1fr 520px;gap:16px;align-items:start}
+.lookup-right{position:sticky;top:12px}
+
+/* Make table card full width when KPI is in header */
+.lookup-grid--onecol{grid-template-columns:1fr !important}
+
+.lookup-left{
+  background:linear-gradient(180deg,#14344a,#0b2133);
+  border:1px solid #1b3a52;border-radius:12px;padding:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);min-width:0;
+}
+.lookup-left > div[style*="overflow:auto"]{margin-top:10px}
+
+/* KPI (compact in header) */
+.kpi{color:var(--text)}
+.kpi-inline{margin-left:0;width:1120px;flex:0 1 1120px}
+.kpi-table{font-size:12px;border-spacing:0}
+.kpi-table th,.kpi-table td{padding:6px 8px;line-height:1.2}
+.kpi-table thead th{white-space:nowrap}
+.kpi-table .big{font-size:18px;font-weight:700}
+#kpiTargetGear{width:22px;height:22px;font-size:14px;padding:0}
+.gear-btn{margin-left:8px;cursor:pointer;border:1px solid #2b2b2b;border-radius:8px;background:#1f1f1f;color:#eaeaea;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px}
+.gear-btn:hover{background:#2b2b2b}
+
+/* === 1) Lookup header needs flex to line-up controls + KPI === */
+#screen-lookup .lookup-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;         /* wrap nicely on smaller widths */
+  margin-bottom:10px;
+}
+
+/* Optional: nicer branch select like before */
+#screen-lookup .branch-filter select{
+  padding:10px 12px;
+  font-size:16px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  min-width:200px;
+}
+
+/* === 2) Generic .grid helper (some sections rely on it) === */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:24px;
+}
+
+
+/* === 3) Table page: the dark “card” behind the table/controls === */
+.lookup-left{
+  background:linear-gradient(180deg,#14344a,#0b2133);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  min-width:0;                     /* prevent overflow with table */
+}
+.lookup-left > div[style*="overflow:auto"]{
+  margin-top:10px;
+}
+
+/* === 4) KPI compact block that sits in the header === */
+.kpi-inline{
+  margin-left: 0;
+  max-width: 100%;
+  width: auto;              /* was 1120px */
+  flex: 1 1 auto;           /* let it grow/shrink with the header */
+}
+
+.kpi-table{ font-size:12px; border-spacing:0; }
+.kpi-table th,.kpi-table td{ padding:6px 8px; line-height:1.2; }
+.kpi-table thead th{ white-space:nowrap; }
+.kpi-table .big{ font-size:18px; font-weight:700; }
+#kpiTargetGear{ width:22px; height:22px; font-size:14px; padding:0; }
+
+/* === 5) Keep the single-column layout when KPI is in header === */
+.lookup-grid--onecol{ grid-template-columns:1fr !important; }
+
+
+/* ===============================
+   MODAL (shared)
+   =============================== */
+.modal{position:fixed;inset:0;z-index:1200;display:block}
+.modal.hidden{display:none}
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.modal-card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#1e1e1e;color:#eaeaea;border:1px solid #2b2b2b;border-radius:12px;padding:16px 18px;min-width:320px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.modal__backdrop{position:absolute; inset:0; background:rgba(0,0,0,.45)}
+.modal__panel{position:relative; margin:5vh auto 0; width:520px; background:#fff; color:#111; border-radius:12px; padding:16px 18px; box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.grp{display:flex; gap:14px; align-items:center; margin-top:8px; flex-wrap:wrap}
+
+/* ===============================
+   FOLLOW-UP SCREEN (matches theme)
+   =============================== */
+.fu-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:1080px){.fu-wrap{grid-template-columns:1fr}}
+.fu-card{background:linear-gradient(180deg,#14344a,#0b2133);border:1px solid #1b3a52;border-radius:12px;padding:12px}
+.fu-card h3{margin:0 0 8px}
+.fu-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.fu-pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #1b3a52;background:#0f2334;color:#a9bbcb;font-size:12px}
+.fu-status{padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid}
+.fu-st-done{background:rgba(34,197,94,.12);color:#9ff3c0;border-color:rgba(34,197,94,.35)}
+.fu-st-noreply{background:rgba(255,206,58,.14);color:#ffe18a;border-color:rgba(255,206,58,.35)}
+.fu-st-other{background:rgba(169,187,203,.12);color:#d7e6f5;border-color:rgba(169,187,203,.35)}
+.fu-drugs{display:flex;flex-wrap:wrap;gap:6px}
+.fu-pill-w{background:#f8fafc;color:#111;border:1px solid #e5e7eb;border-radius:999px;padding:4px 8px;font-size:12px}
+.fu-card table{width:100%;border-collapse:collapse;table-layout:fixed}
+.fu-card th{background:#2a2a2a;color:#fff;position:sticky;top:0}
+.fu-card td{padding:10px 12px;border-bottom:1px solid #e5e7eb;text-align:center;vertical-align:middle;color:#000;background:#fff;overflow-wrap:anywhere;word-break:break-word}
+.fu-note{color:#a9bbcb;margin-top:6px}
+
+/* ===============================
+   LOADINGOVERLAY (tight FA spinner + text)
+   =============================== */
+.loadingoverlay .loadingoverlay_content{
+  position:fixed !important; left:50% !important; top:50% !important;
+  transform:translate(-50%,-50%) !important;
+  display:flex !important; flex-direction:column-reverse !important; /* text above, spinner below */
+  align-items:center !important; justify-content:center !important;
+  gap:0px !important; /* tweak this to control gap */
+}
+
+/* Keep only the two nodes; nuke everything else the plugin might add */
+.loadingoverlay .loadingoverlay_content > *:not(.loadingoverlay_text):not(.loadingoverlay_fontawesome){
+  display:none !important; width:0 !important; height:0 !important; padding:0 !important; margin:0 !important;
+}
+.loadingoverlay .loadingoverlay_image,
+.loadingoverlay .loadingoverlay_spinner,
+.loadingoverlay .loadingoverlay_progress{
+  display:none !important; width:0 !important; height:0 !important;
+}
+
+/* Normalize the 2 elements you want */
+.loadingoverlay .loadingoverlay_text,
+.loadingoverlay .loadingoverlay_fontawesome{
+  position:static !important; top:auto !important; left:auto !important; transform:none !important;
+  display:block !important; margin:0 !important; line-height:1 !important; padding:0 !important;
+}
+
+/* Sizes (adjust to taste) */
+.loadingoverlay .loadingoverlay_fontawesome{ font-size:150px !important; }
+.loadingoverlay .loadingoverlay_text{ font-size:50px !important; }
+
+/* ===============================
+   LoadingOverlay fine-tuning
+   =============================== */
+:root{
+  /* tweak these 3 numbers to taste */
+  --load-text-nudge: -6px;   /* move text up (−) or down (+) */
+  --load-spin-nudge:  6px;   /* move spinner down (+) or up (−) */
+  --load-gap:         -4px;  /* pull them closer (−) or push apart (+) */
+}
+
+.loadingoverlay .loadingoverlay_content{
+  /* keep them centered and stacked with text above spinner */
+  flex-direction: column-reverse !important;
+  gap: 0 !important;
+}
+
+.loadingoverlay .loadingoverlay_text{
+  /* nudge text a bit higher and closer */
+  margin-bottom: var(--load-gap) !important;
+  transform: translateY(var(--load-text-nudge)) !important;
+}
+
+.loadingoverlay .loadingoverlay_fontawesome{
+  /* nudge spinner a bit lower and closer */
+  margin-top: var(--load-gap) !important;
+  transform: translateY(var(--load-spin-nudge)) !important;
+}
+/* Crush all spacing inside the overlay, then nudge harder */
+.loadingoverlay .loadingoverlay_content{
+  row-gap: 0 !important; /* for browsers using row-gap */
+}
+.loadingoverlay .loadingoverlay_content > *{
+  margin:0 !important; padding:0 !important; line-height:1 !important;
+}
+
+/* Make the two items sit closer with stronger nudges */
+:root{
+  --load-text-nudge: -24px;  /* move text further up */
+  --load-spin-nudge: -12px;  /* move spinner up too */
+  --load-gap:        -28px;  /* pull them together strongly */
+}
+
+/* apply the nudges */
+.loadingoverlay .loadingoverlay_text{
+  margin-bottom: var(--load-gap) !important;
+  transform: translateY(var(--load-text-nudge)) !important;
+}
+.loadingoverlay .loadingoverlay_fontawesome{
+  margin-top: var(--load-gap) !important;
+  transform: translateY(var(--load-spin-nudge)) !important;
+  font-size: 120px !important;     /* ลดขนาดไอคอนนิดให้ดูแน่นขึ้น; ปรับได้ */
+  line-height: 1 !important;
+}
+
+/* === LoadingOverlay: stack text & spinner in the same spot === */
+:root{
+  /* tune these two to control closeness/overlap */
+  --load-text-offset: -14px;   /* move text up (−) / down (+) */
+  --load-spin-offset:  12px;   /* move spinner down (+) / up (−) */
+}
+
+.loadingoverlay .loadingoverlay_content{
+  display: grid !important;              /* override flex */
+  place-items: center !important;        /* center both */
+  gap: 0 !important;
+}
+
+.loadingoverlay .loadingoverlay_content > *{
+  grid-area: 1 / 1 !important;           /* put BOTH in the same cell */
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* micro-position them to be very close (or overlap) */
+.loadingoverlay .loadingoverlay_text{
+  transform: translateY(var(--load-text-offset)) !important;
+}
+
+.loadingoverlay .loadingoverlay_fontawesome{
+  transform: translateY(var(--load-spin-offset)) !important;
+  /* optional sizing — adjust if needed */
+  font-size: 120px !important;
+}
+
+
+/* ===============================
+   A-MED POPUP
+   =============================== */
+.amed-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index: 999990 !important;display:none}
+.amed-card{position:fixed;left:50%;bottom:5%;transform:translateX(-50%);z-index: 1000000 !important;width:min(1200px,95vw);height:85vh;background:#fff;color:#111;border-radius:14px;box-shadow:0 18px 60px rgba(0,0,0,.45);overflow:auto;display:none}
+.amed-head{position:sticky;top:0;z-index: 5;background:#0f4c5c;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+
+/* table header sticks *under* the modal header */
+.amed-card .amed-table thead th{
+  position: sticky;
+  top: var(--amed-head-h, 0px);
+  z-index: 1;
+  background: #0f4c5c;  /* keep opaque */
+  color: #fff;
+}
+
+/* when the modal is open, keep the page from scrolling behind it */
+body.amed-open, html.amed-open {
+  overflow: hidden !important;
+}
+
+
+.amed-title{margin:0;font-size:16px}
+.amed-btn{background:#10b981;border:none;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+.amed-btn--danger{background:#ef4444}
+.amed-body{padding:18px}
+
+.amed-date{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.amed-date label{display:block;font-weight:700;color:#374151;margin-bottom:6px}
+.amed-date input[type="date"]{width:100%;max-width:260px;padding:8px 10px;border:1px solid #d1d5db;border-radius:8px}
+
+.amed-kv{border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;background:#fff}
+.amed-row{display:grid;grid-template-columns:140px 1fr}
+.amed-cell{padding:10px 12px;border-bottom:1px solid #e5e7eb}
+.amed-row:last-child .amed-cell{border-bottom:0}
+.amed-label{background:#f6f7fb;color:#374151;font-weight:600}
+.amed-kv select{width:100%;padding:8px 10px;border:1px solid #d1d5db;border-radius:8px}
+.amed-details{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+
+.amed-section{background:#6b21a8;color:#fff;padding:8px 12px;border-radius:8px;margin:14px 0 8px;font-weight:700}
+.amed-prescription{background:#0f4c5c;color:#fff;padding:8px 12px;border-radius:8px;margin:14px 0 8px;font-weight:700}
+
+.amed-copywrap{position:relative}
+.amed-copyicon{position:absolute;right:8px;top:8px;background:#fff;border:1px solid #d1d5db;border-radius:8px;padding:6px;cursor:pointer}
+.amed-box{border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#fafafa}
+
+.amed-table{width:100%;border-collapse:collapse}
+.amed-table th,.amed-table td{border:1px solid #cad3df;padding:10px 12px;vertical-align:top}
+.amed-table thead th{background:#0f4c5c;color:#fff;text-align:center}
+
+.amed-sublines{margin-top:6px;padding:8px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px}
+.amed-sublines h5{margin:0 0 6px;font-size:12px;color:#374151}
+.amed-subline{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 0;border-top:1px dashed #e5e7eb}
+.amed-subline:first-child{border-top:0}
+.amed-ghost{color:#6b7280}
+.amed-mini{border:1px solid #d1d5db;background:#fff;border-radius:6px;padding:4px 6px;cursor:pointer;font-size:12px}
+
+/* A-med toast */
+.amed-toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(12px);
+  background:#0f4c5c;color:#fff;padding:8px 12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.3);
+  z-index: 1000015 !important; opacity:0;pointer-events:none;transition:opacity .15s ease, transform .15s ease;font-weight:600;
+}
+.amed-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.amed-toast--error{background:#b91c1c}
+
+@media print{
+  body>*:not(.amed-card){display:none !important}
+  .amed-overlay{display:none !important}
+  .amed-card{position:static;transform:none;inset:auto;width:210mm;height:auto;box-shadow:none;border-radius:0}
+  .amed-head{display:none}
+}
+
+/* A-med nav buttons */
+:root{ 
+  --amed-zoom: 1 
+  --amed-zoom-tweak: 1;           /* our extra multiplier */
+}   
+
+.amed-nav{
+  --nav-size: 110px; --chev: 12px;
+  position: fixed; top: 50%;
+  transform: translateY(-50%) scale(calc(var(--amed-zoom) * var(--amed-zoom-tweak)));
+  transform-origin: center;
+  transition: transform .12s ease-out;
+  z-index: 999992; width: var(--nav-size); height: var(--nav-size);
+  border-radius: 50%; border: none;
+  background: #0f4c5c; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 16px 40px rgba(0,0,0,.35);
+  cursor: pointer; opacity: .95; font-size: 0; line-height: 0; padding: 0;
+}
+.amed-nav:hover{ opacity: 1 }
+.amed-nav--left{ left: 20px }
+.amed-nav--right{ right: 20px }
+.amed-nav.disabled{ opacity: .35; cursor: not-allowed }
+.amed-nav::before{
+  content:""; width:38%; height:38%;
+  border: solid currentColor; border-width: 0 var(--chev) var(--chev) 0;
+  transform: rotate(-45deg);
+}
+.amed-nav--left::before{ transform: rotate(135deg) }
+@media print{ .amed-nav{ display:none !important } }
+:root{ --chev-nudge-left:12%; --chev-nudge-right:18%; --chev-nudge-y:-2%; }
+.amed-nav--left::before{ transform: translate(var(--chev-nudge-left), var(--chev-nudge-y)) rotate(135deg) }
+.amed-nav--right::before{ transform: translate(calc(-1 * var(--chev-nudge-right)), var(--chev-nudge-y)) rotate(-45deg) }
+/* As dppx rises (user zooms in), apply stronger shrink */
+@media (min-resolution: 1.25dppx){ :root{ --amed-zoom-tweak: .9 } }
+@media (min-resolution: 1.5dppx) { :root{ --amed-zoom-tweak: .8 } }
+@media (min-resolution: 1.75dppx){ :root{ --amed-zoom-tweak: .7 } }
+@media (min-resolution: 2dppx)   { :root{ --amed-zoom-tweak: .6 } }
+
+
+/* ===============================
+   REPORT 10/11 THEME (scoped)
+   Wrap report content with class="r1011"
+   =============================== */
+.r1011{
+  --bg:#0b3648; --panel:#0a2e41; --ink:#e7f0fb; --accent:#a3e635;
+  --input:#fff3a3; --edge:#12394b; --warn:#b91c1c; --warnbg:#3b0f0f;
+  color:var(--ink);
+}
+.r1011 .wrap{max-width:1040px;margin:18px auto;padding:16px 18px;background:var(--panel);
+  border:1px solid var(--edge); border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.r1011 h1{margin:0 0 10px;font-size:28px}
+.r1011 h3{margin:0 0 10px}
+.r1011 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.r1011 .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.r1011 .label{min-width:180px;font-weight:700}
+.r1011 .hl{background:var(--input);color:#111;border-radius:8px;padding:6px 10px;border:none;outline:none}
+.r1011 input[type="text"],.r1011 input[type="number"],.r1011 input[type="date"]{font-size:16px}
+.r1011 input[type="file"]{color:var(--ink)}
+.r1011 .btn{background:#22c55e;color:#0b1424;border:1px solid #0e7d6a;border-radius:12px;padding:10px 16px;cursor:pointer;font-size:16px}
+.r1011 .btn.sec{background:#0f2334;color:#e7f0fb;border-color:#1b3a52}
+.r1011 .btn.big{font-size:22px;padding:16px 22px;width:100%;border-radius:16px;background:var(--accent);border:1px solid rgba(0,0,0,.2)}
+.r1011 .btn:disabled{opacity:.5;cursor:not-allowed}
+.r1011 .card{background:linear-gradient(180deg,#14344a,#0b2133);border:1px solid #1b3a52;border-radius:12px;padding:14px}
+.r1011 .muted{color:#a9bbcb;font-size:12px}
+.r1011 hr.sep{border:none;border-top:1px solid #1b3a52;margin:14px 0}
+.r1011 table{width:100%;border-collapse:collapse}
+.r1011 th,.r1011 td{border:1px solid #cbd5e1;padding:6px;text-align:center;background:#fff;color:#111}
+.r1011 td.right{text-align:right}
+.r1011 .warn{background:var(--warnbg);color:#ffdada;border:1px solid var(--warn);border-radius:10px;padding:10px;margin-top:10px}
+.r1011 .page{page-break-after:always;background:#fff;color:#111;border:1px solid #dbe3ec;margin:18px 0;padding:16px;border-radius:10px}
+.r1011 .head{border-bottom:2px solid #0b2133;margin-bottom:8px}
+.r1011 .head h2{margin:0 0 6px}
+.r1011 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0}
+.r1011 .grid2 div{border:1px solid #dbe3ec;padding:6px;border-radius:6px;background:#fff}
+@media print{
+  .r1011 .no-print{display:none}
+  .r1011 .page{margin:0;border:none;border-radius:0;box-shadow:none}
+}
+/* Kill any extra nodes or <br> the plugin might insert */
+.loadingoverlay .loadingoverlay_content br,
+.loadingoverlay .loadingoverlay_content > :not(.loadingoverlay_text):not(.loadingoverlay_fontawesome){
+  display:none !important;
+}
+
+/* Center the overlay container */
+.loadingoverlay .loadingoverlay_content{
+  position:fixed !important;
+  left:50% !important;
+  top:50% !important;
+  transform:translate(-50%,-50%) !important;
+  width:0 !important;   /* we don't need layout space */
+  height:0 !important;
+}
+
+/* Control how close they are (px). 0 = touch, negative = overlap */
+:root{ --lo-gap: -120px; }
+
+/* smaller screens */
+@media (max-width: 768px){
+  :root{ --lo-gap:-90px }           /* a touch less overlap on mobile */
+}
+
+/* per-overlay container example */
+.overlay-small { --lo-gap:-80px; }   /* apply on the overlay wrapper */
+
+/* Absolutely position both items at the same spot */
+.loadingoverlay .loadingoverlay_text,
+.loadingoverlay .loadingoverlay_fontawesome{
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  margin:0 !important;
+  padding:0 !important;
+  line-height:1 !important;
+  transform-origin:center !important;
+}
+
+/* put text just above center by its own height; adjust with --lo-gap */
+.loadingoverlay .loadingoverlay_text{
+  transform: translate(-50%, calc(-100% - var(--lo-gap))) !important;
+}
+
+/* put spinner just below center; adjust with --lo-gap */
+.loadingoverlay .loadingoverlay_fontawesome{
+  transform: translate(-50%, var(--lo-gap)) !important;
+  font-size: 120px !important; /* tweak if you like */
+}
+/* LoadingOverlay should sit under app modals */
+.loadingoverlay { z-index: 14000 !important; }
+
+/* Your modal sits above everything else */
+.modal{ position:fixed; inset:0; z-index:15000; display:block }
+.modal.hidden{ display:none }
+.modal-card{ z-index:15001 }           /* card above its own backdrop */
+.modal-backdrop{ z-index:15000 }       /* backdrop under the card */
+.lookup-adv{
+  display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center;
+  margin:8px 0 6px;
+}
+.lookup-adv input{ padding:8px 10px; width:220px; }
+.lookup-adv label{ display:flex; align-items:center; gap:6px; color:#a9bbcb; }
+
+/* ==== REPORT MODAL (themed) ==== */
+#reportModal .modal__panel{
+  background: linear-gradient(180deg, var(--panel), var(--surface)) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 18px 60px rgba(0,0,0,.45) !important;
+  width: min(640px, 96vw) !important;
+  padding: 0 !important;                /* we’ll pad inside the sections */
+  overflow: hidden;                     /* keep header sticky edge clean */
+}
+
+#reportModal .modal__backdrop{
+  background: rgba(0,0,0,.55) !important;
+}
+
+/* Header */
+#reportModal .rm-head{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; padding:14px 16px;
+  background: #0f4c5c; color:#fff;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+#reportModal .rm-title{
+  display:flex; align-items:center; gap:10px; margin:0;
+  font-size:18px; font-weight:800;
+}
+#reportModal .rm-title .rm-badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:28px; height:28px; border-radius:8px;
+  background: #10b981; color:#0b1424; font-weight:800; font-size:14px;
+}
+#reportModal .rm-close{
+  border:1px solid rgba(255,255,255,.25);
+  background:transparent; color:#fff; cursor:pointer;
+  border-radius:10px; padding:8px 10px; line-height:1;
+}
+#reportModal .rm-close:hover{ background: rgba(255,255,255,.08) }
+
+/* Body */
+#reportModal .rm-body{
+  padding:16px 18px;
+  display:flex; flex-direction:column; gap:14px;
+}
+
+/* Section blocks */
+#reportModal .rm-block{
+  background: linear-gradient(180deg,#14344a,#0b2133);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+}
+#reportModal .rm-block h4{
+  margin:0 0 10px; font-size:14px; color:var(--muted); font-weight:700;
+}
+
+/* Controls */
+#reportModal label{ color: var(--muted); font-weight:600 }
+#reportModal select,
+#reportModal input[type="date"],
+#reportModal input[type="number"],
+#reportModal input[type="text"]{
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px;
+}
+
+/* Grid groups you already use */
+#reportModal .grp{ gap: 10px 14px }
+#reportModal .grp label{ display:flex; align-items:center; gap:8px; }
+
+/* Advanced filters row */
+#reportModal .lookup-adv{
+  background: linear-gradient(180deg,#14344a,#0b2133);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+}
+
+/* Footer */
+#reportModal .rm-foot{
+  display:flex; gap:8px; justify-content:flex-end;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+
+/* Buttons (re-use your .btn + .btn--go) */
+#reportModal .btn{ padding:10px 14px; border-radius:10px }
+#reportModal .btn--ghost{
+  background: transparent !important;
+  color: var(--text) !important;
+  border:1px solid var(--border) !important;
+}
+/* --- Advanced filters (uniform rows) --- */
+.lookup-adv.af-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(320px, 1fr));
+  gap:12px 16px;
+  align-items:end;
+  background: linear-gradient(180deg,#14344a,#0b2133);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+}
+
+/* each field: fixed label + flexible input */
+.af-field{
+  display:grid;
+  grid-template-columns: 110px 1fr;  /* <- align text */
+  gap:8px;
+  align-items:center;
+  min-width:0;                        /* prevent overflow */
+}
+.af-label{
+  color: var(--muted);
+  font-weight:600;
+  white-space:nowrap;
+}
+
+/* inputs look same as the app controls */
+.lookup-adv.af-grid input{
+  width:100%;
+  padding:10px 12px;
+  background:var(--surface) !important;
+  color:var(--text) !important;
+  border:1px solid var(--border) !important;
+  border-radius:10px;
+}
+
+/* action button aligns on the baseline */
+.af-actions{
+  align-self:end;
+}
+
+/* ghost style matches theme */
+.btn.btn--ghost{
+  background:transparent !important;
+  color:var(--text) !important;
+  border:1px solid var(--border) !important;
+  box-shadow:none;
+}
+
+/* responsive wrap: 2 cols then 1 col */
+@media (max-width: 1280px){
+  .lookup-adv.af-grid{ grid-template-columns: repeat(2, minmax(320px, 1fr)); }
+}
+@media (max-width: 780px){
+  .lookup-adv.af-grid{ grid-template-columns: 1fr; }
+  .af-actions{ grid-column: 1 / -1; justify-self:end; }
+}
+
+/* Vertical, aligned filter block */
+#reportModal .lookup-adv{
+  display: grid;
+  grid-template-columns: 1fr;        /* one field per row */
+  gap: 12px;                          /* space between rows */
+  background: rgba(15,35,52,.55);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  max-width: 760px;                   /* optional: keep it tidy */
+}
+
+/* Each row = fixed label + flexible control */
+#reportModal .lookup-adv label{
+  display: grid;
+  grid-template-columns: 120px 1fr;   /* ← align labels */
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Inputs look uniform */
+#reportModal .lookup-adv input,
+#reportModal .lookup-adv select{
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  box-sizing: border-box;
+}
+
+/* “กรอง” button on its own row, aligned right */
+#reportModal .lookup-adv .btn{
+  justify-self: end;      /* right edge */
+  height: 44px;
+  border-radius: 12px;
+}
+
+/* If you want a bit more breathing room between label and field */
+@media (min-width: 640px){
+  #reportModal .lookup-adv label{
+    grid-template-columns: 140px 1fr; /* increase label column width */
+  }
+}
+/* header layout */
+#reportModal .rm-head{
+  display:flex; align-items:center; gap:12px; padding:14px 16px;
+  background:#0f4c5c; color:#fff; border-bottom:1px solid rgba(255,255,255,.1);
+}
+#reportModal .rm-title{ margin:0; display:flex; align-items:center; gap:10px; font-weight:800; }
+#reportModal .rm-title{ flex:1 }               /* push controls to the right */
+
+/* branch box */
+#reportModal .rm-branch{ display:flex; align-items:center; gap:8px; }
+#reportModal .rm-branch label{ font-weight:700; color:#eaf7ff; white-space:nowrap; }
+#reportModal .rm-branch select{
+  height:36px; min-width:140px; padding:6px 10px; border-radius:10px;
+  background:var(--surface); color:var(--text); border:1px solid var(--border);
+}
+
+/* keep close button neat */
+#reportModal .rm-close{
+  width:36px; height:36px; border-radius:10px; border:1px solid rgba(255,255,255,.25);
+  background:transparent; color:#fff; cursor:pointer;
+}
+
+/* stack nicely on narrow screens */
+@media (max-width: 560px){
+  #reportModal .rm-head{ flex-wrap:wrap; }
+  #reportModal .rm-branch{ width:100%; justify-content:flex-start; }
+}
+/* keep the label in one line + make it a bit larger */
+#grp-week label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;   /* no wrapping */
+  font-size:15px;       /* bump size a bit */
+  font-weight:600;      /* optional: bolder */
+  min-width: 210px;     /* optional: give it room */
+}
+#grp-week input[type="date"]{ width:160px; } /* tweak as you like */
+.nowrap-lg{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+  font-size:15px;
+  font-weight:600;
+}
+/* unify row look */
+#reportModal .grp{
+  display:flex;
+  align-items:center;
+  gap:18px;                 /* a touch more space */
+  padding-left:12px;
+}
+
+#reportModal .grp label{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  white-space:nowrap;       /* keep label on one line */
+  margin:0;
+  font-weight:600;
+  color:var(--muted);
+}
+
+/* wider date inputs (same feel as month controls) */
+#reportModal .grp input[type="date"]{
+  width:140px;              /* breathing room */
+  height:44px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:var(--surface) !important;
+  color:var(--text) !important;
+  border:1px solid var(--border) !important;
+  box-sizing:border-box;
+}
+
+/* specifically help the two-date range row */
+#reportModal #grp-range{
+  gap:28px;                 /* more space between start/end */
+}
+#reportModal #grp-range label{
+  min-width:60px;          /* prevents "สิ้นสุด:" from wrapping */
+}
+/* specifically help the two-date range row */
+#reportModal #grp-single{
+  gap:28px;                 /* more space between start/end */
+}
+#grp-single label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;   /* no wrapping */
+  font-size:15px;       /* bump size a bit */
+  font-weight:600;      /* optional: bolder */
+  min-width: 210px;     /* optional: give it room */
+}
+#grp-single input[type="date"]{ width:160px; } /* tweak as you like */
+.nowrap-lg{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+  font-size:15px;
+  font-weight:600;
+}
+/* Bigger print button with text */
+.icon-btn--report{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;                 /* space between icon & text */
+  padding:10px 14px;        /* larger hit area */
+  border-radius:12px;
+  font-size:16px;
+  line-height:1;
+}
+.icon-btn--report i{
+  font-size:22px;           /* bigger icon */
+}
+.icon-btn--report .btn-label{
+  font-weight:700;
+  letter-spacing:.2px;
+}
+
+/* (optional) keep it compact on very small screens */
+@media (max-width:560px){
+  .icon-btn--report .btn-label{ display:none; }
+}
+/* ---- header style like the first mock ---- */
+.r1011 .head .title{ text-align:center; margin:0 0 4px; }
+.r1011 .head .place{ text-align:center; margin-bottom:8px; }
+.r1011 .head .place small{ opacity:.8; }
+
+/* 4-column meta table: [label][value] [label][value] */
+.r1011 table.meta{
+  width:100%; border-collapse:collapse; margin-top:6px;
+}
+.r1011 table.meta td{
+  border:1px dotted #94a3b8; padding:6px 8px; background:#fff; color:#111;
+}
+.r1011 table.meta td.label{
+  width:220px; background:#eef2f7; font-weight:700;
+}
+
+
+.r1011 .head h2{
+  text-align:center;
+  font-size:18px;      /* pick your size */
+  line-height:1.25;    /* tighter lines */
+  margin:0 0 6px;      /* small bottom gap */
+}
+
+
+@media print{
+  /* hide everything by default */
+  body * { display: none !important; }
+
+  /* show only the rendered report pages */
+  #reportRoot, #reportRoot * { display: initial !important; }
+
+  /* make the report lay out from the top-left on paper */
+  #reportRoot { position: static !important; margin: 0 !important; }
+}
+
+@media print{
+  thead { display: table-header-group; }   /* repeat <thead> on page breaks */
+  tfoot { display: table-footer-group; }   /* if you add a footer */
+}
+
+
+@media print{
+  /* kill container + wrapper chrome */
+  .container.r1011,
+  .r1011 .wrap{
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #fff !important;   /* or transparent */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* already had this, but keep it */
+  .r1011 .page{
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* optional: remove the underline under the big title */
+  .r1011 .head{ border-bottom: 0 !important; }
+
+  /* optional: remove inline field underlines */
+  .r1011 .head span{ box-shadow: none !important; }
+
+  /* optional: zero page margins from the printer, if your browser honors it */
+  @page { margin: 0; }
+}
+
+
+/* ===== RX1011: utilities & base ===== */
+.is-hidden{display:none !important}
+.text-center{text-align:center}
+.text-right{text-align:right}
+
+.rx1011-card{padding:16px;border:1px solid #ddd;border-radius:8px}
+.rx1011-btn{padding:10px 16px;border:0;border-radius:8px;cursor:pointer}
+.rx1011-input--error{outline:2px solid #e74c3c;box-shadow:0 0 0 2px rgba(231,76,60,.2)}
+.rx1011-outerpad{padding:16px;box-sizing:border-box}
+
+/* ===== AddTile -> rx1011-addtile ===== */
+.rx1011-addtile{all:unset;display:flex;flex-direction:column;align-items:center;justify-content:center;width:260px;height:180px;cursor:pointer;border-radius:12px;background:linear-gradient(#fef08a,#facc15);color:#111;font-weight:800;transition:transform .18s ease,box-shadow .18s ease}
+.rx1011-addtile:hover{transform:scale(1.03);box-shadow:0 8px 16px rgba(0,0,0,.25)}
+.rx1011-addtile:active{transform:scale(.96);box-shadow:0 4px 8px rgba(0,0,0,.3)}
+.rx1011-addtile__label{font-size:20px;margin-top:8px;letter-spacing:.2px}
+
+/* ===== root tokens (คงชื่อเดิมไว้ ใช้แล้วในธีม rx1011) ===== */
+:root{
+  --teal:#0E4E68; --panel:#0f6585; --ink:#163741; --sky:#a7d8ee;
+  --headTop:#29a1d1; --headBot:#1182b3; --btnG1:#6ee16e; --btnG2:#22c55e;
+  --danger:#ef4444;
+}
+
+/* ===== Layout bits used by rx1011 ===== */
+.rx1011-tabcard{
+  max-width:1300px;margin:24px auto;background:#1f2937;border:1px solid #2b2c2e;border-radius:14px;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);overflow:hidden
+}
+.rx1011-tabbar{display:flex;gap:6px;padding:10px;background:#0f172a;border-bottom:1px solid #2b2c2e}
+.rx1011-tab{appearance:none;border:1px solid #2b2c2e;background:#111827;color:#e5e7eb;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+.rx1011-tab.active{background:#0057ff;border-color:#0057ff;color:#fff}
+.rx1011-tabcard-body{padding:16px}
+
+/* ===== Buttons (variants align withก่อนหน้า) ===== */
+.rx1011-btn--accent{
+  background:linear-gradient(var(--headTop),var(--headBot));color:#fff;font-weight:700;border-radius:10px;padding:12px 14px;
+  box-shadow:0 3px 0 rgba(0,0,0,.15),0 8px 16px rgba(0,0,0,.08);border:1px solid #0e5f84
+}
+.rx1011-btn--accent:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.rx1011-btn--accent:active{transform:translateY(0)}
+.rx1011-btn--yellow{background:linear-gradient(#fef08a,#facc15);border:1px solid #eab308;color:#111;font-weight:700}
+.rx1011-btn--go{background:linear-gradient(#6ee16e,#22c55e)}
+.rx1011-btn--back{background:linear-gradient(#fba166,#f97316)}
+.rx1011-btn--primary{background:linear-gradient(var(--btnG1),var(--btnG2))}
+.rx1011-btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* ===== rx1011 grid & cards ===== */
+.rx1011-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.rx1011-qcard{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.rx1011-qcard--amed{background:#fff;border:1px solid #4F0079;border-radius:10px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.rx1011-qtitle{font-weight:600;margin-bottom:10px}
+.rx1011-qinput{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font:14px/1.4 system-ui,"TH Sarabun New",sans-serif;margin-top:8px;box-sizing:border-box}
+
+/* ===== Section wrappers ===== */
+.rx1011-section-card{max-width:1200px;margin:24px auto;border-radius:12px;padding:16px}
+.rx1011-section-card--symp{background:#dbeafe;border:1px solid #bfdbfe}
+.rx1011-section-header{background:#3b82f6;color:#fff;font-weight:700;border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.rx1011-section-sub{display:block;font-size:.85em;font-weight:400;margin-top:4px;opacity:.9}
+
+/* ===== POS-like table (remap: pos-table → rx1011-table) ===== */
+.rx1011-table{border:1px solid rgba(0,0,0,.25);border-radius:6px;overflow:hidden}
+.rx1011-thead{
+  display:grid;
+  /* ลำดับ | บาร์โค้ด | รายการ | รหัส | ต่อหน่วย | จำนวน | รวม | NOTE */
+  grid-template-columns:70px 140px 1fr 130px 110px 90px 130px 80px;
+  background:linear-gradient(var(--headTop),var(--headBot));
+  color:#fff;font-weight:600;text-align:center;border-bottom:1px solid rgba(0,0,0,.25)
+}
+.rx1011-thead>div{padding:10px 6px;border-right:1px solid rgba(255,255,255,.25)}
+.rx1011-thead>div:last-child{border-right:0}
+.rx1011-tbody{min-height:260px}
+.rx1011-row{
+  display:grid;grid-template-columns:70px 140px 1fr 130px 110px 90px 130px 80px;
+  align-items:center;color:#e9f5fb;border-bottom:1px dashed rgba(255,255,255,.12)
+}
+.rx1011-row>div{padding:10px 8px}
+
+/* responsive table columns */
+@media (max-width:1040px){
+  .rx1011-thead,.rx1011-row{grid-template-columns:70px 140px 1fr 110px 90px 130px 80px}
+  .rx1011-hide-md{display:none}
+}
+@media (max-width:860px){
+  .rx1011-thead,.rx1011-row{grid-template-columns:60px 120px 1fr 90px 120px 60px}
+  .rx1011-hide-sm{display:none}
+}
+
+/* ===== icon buttons ===== */
+.rx1011-iconbtn{
+  width:36px;height:36px;border-radius:6px;background:transparent;border:1px solid transparent;
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer
+}
+.rx1011-iconbtn:hover{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25)}
+.rx1011-iconbtn:active{transform:translateY(1px)}
+.rx1011-iconbtn svg{width:18px;height:18px;fill:var(--danger)}
+.rx1011-iconbtn--trash{justify-self:center;border-radius:10px;width:60px;height:60px}
+.rx1011-iconbtn--trash svg{width:20px;height:20px}
+
+/* ===== input bar & totals ===== */
+.rx1011-pos-inputbar{
+  margin-top:14px;background:var(--sky);border:2px solid var(--ink);border-radius:6px;
+  padding:12px;display:grid;grid-template-columns:1fr 220px;gap:10px;align-items:center
+}
+.rx1011-total{text-align:right;font-size:28px;color:#0d2e39;font-weight:700;white-space:nowrap}
+.rx1011-mult{display:none;margin-left:8px;font-size:13px;color:#083646;background:#e5f3f9;border:1px solid #c8e3ef;padding:2px 8px;border-radius:999px}
+
+/* ===== right rail ===== */
+.rx1011-pos-rail{padding:1px;align-items:stretch}
+.rx1011-pos-rail>*{display:block;width:90%;margin:15px 0}
+.rx1011-coupon{
+  background:linear-gradient(#3bb0de,#1790c2);border:2px solid #20586b;color:#083646;font-weight:700;text-align:center;border-radius:6px;padding:22px 10px;text-shadow:0 1px 0 rgba(255,255,255,.3);cursor:pointer
+}
+
+/* ===== alerts & views ===== */
+.rx1011-pos-alert{background:#ffebee;border:1px solid #ffcdd2;color:#b71c1c;padding:10px 12px;border-radius:8px;margin:8px 12px 0}
+.rx1011-pos-alert.is-hidden{display:none}
+.rx1011-view{display:none}
+.rx1011-view:not(.is-hidden){display:block}
+
+/* ===== Login section (scoped) ===== */
+[data-view="login"] .rx1011-login-card{
+  max-width:980px;margin:24px auto;padding:24px 24px 18px;border-radius:16px;
+  background:linear-gradient(180deg,#eaf6fb,#d6edf7);border:1px solid var(--sky);
+  box-shadow:0 10px 24px rgba(17,130,179,.10),0 2px 6px rgba(0,0,0,.05)
+}
+[data-view="login"] .rx1011-login-title{
+  margin:6px 0 20px;text-align:center;color:var(--teal);font-weight:800;
+  font-size:clamp(24px,3.2vw,36px);letter-spacing:.2px
+}
+[data-view="login"] .rx1011-login-grid{
+  display:grid;grid-template-columns:220px minmax(360px,1fr);gap:18px 16px;align-items:center
+}
+[data-view="login"] .rx1011-login-label{font-size:20px;font-weight:700;color:#0d2e39}
+[data-view="login"] .rx1011-login-input{
+  height:44px;width:100%;padding:8px 12px;font-size:18px;border-radius:10px;border:2px solid #2a4d59;background:#fff;outline:none;
+  transition:box-shadow .15s ease,border-color .15s ease
+}
+[data-view="login"] .rx1011-login-input:focus{border-color:var(--headBot);box-shadow:0 0 0 3px rgba(17,130,179,.18)}
+[data-view="login"] .rx1011-login-actions{text-align:center;margin-top:24px}
+[data-view="login"] .rx1011-login-msg{text-align:center;color:#ef4444;margin-top:10px}
+[data-view="login"].rx1011-section-card--symp{background:linear-gradient(180deg,#dbeafe,#d7f1fb);border-color:#bfdbfe}
+
+/* ===== header accents requested ===== */
+h2{border-left:4px solid #fff04a !important;color:#fff;padding-left:8px}
+h2+div{background:#000 !important;border:1px solid #333 !important;box-shadow:0 2px 8px rgba(0,0,0,.4);color:#fff}
+h2+div textarea, h2+div input[type="text"], h2+div pre{background:#e9ecef !important;color:#111 !important;border-color:#999 !important}
+h2+div h4, h2+div label{color:#fff !important}
+h4{border-left:4px solid #fff04a !important;padding-left:8px;color:#fff}
+
+/* ===== AMED v2 (prefixed) ===== */
+.rx1011-amed2-frame{background:#c96ad6;border:2px solid #5b2a67;border-radius:12px;padding:14px}
+.rx1011-amed2-head{display:grid;grid-template-columns:160px 1fr 1fr 52px;gap:12px;margin-bottom:12px}
+.rx1011-amed2-headcell{
+  background:#0f172a;color:#e5e7eb;font-weight:800;text-align:center;border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:center;letter-spacing:.2px
+}
+.rx1011-amed2-head--sticky{position:sticky;top:0;z-index:2;box-shadow:0 6px 12px rgba(0,0,0,.12)}
+.rx1011-amed2-rows{display:grid;gap:12px}
+.rx1011-amed2-row{background:#b464c3;border:1px solid #74307f;border-radius:10px;padding:12px}
+.rx1011-amed2-row .rx1011-qinput, .rx1011-amed2-row textarea{background:#fff;color:#111;border:2px solid #000;border-radius:6px}
+
+/* AMED rows (ของหน้า edit; map จาก .amed-*) */
+#amedSectionEdit .rx1011-head{
+  display:grid;grid-template-columns:160px 1fr 1fr 52px;font-weight:800;text-align:center;gap:12px
+}
+#amedCardEdit #amedRowsEdit .rx1011-row--detail{
+  display:grid;grid-template-columns:160px 1fr 1fr 52px;gap:12px;align-items:center;margin-bottom:16px
+}
+#amedCardEdit #amedRowsEdit .rx1011-druglabel{
+  background:#0f172a;color:#e5e7eb;border:2px solid #2b2c2e;border-radius:10px;padding:10px 12px;height:60px;font-weight:800;letter-spacing:.2px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,.18)
+}
+#amedCardEdit #amedRowsEdit .rx1011-col{display:grid;grid-template-rows:auto auto;gap:8px}
+
+@media (max-width:880px){
+  #amedSectionEdit .rx1011-head,
+  #amedCardEdit #amedRowsEdit .rx1011-row--detail{grid-template-columns:140px 1fr 1fr 44px}
+}
+@media (max-width:640px){
+  #amedSectionEdit .rx1011-head{grid-template-columns:1fr 1fr}
+  #amedSectionEdit .rx1011-head>:last-child{display:none}
+  #amedCardEdit #amedRowsEdit .rx1011-row--detail{grid-template-columns:1fr}
+  #amedCardEdit #amedRowsEdit .rx1011-druglabel{justify-content:flex-start}
+}
+
+/* legacy helper for drug label cell vertical center */
+.rx1011-row--detail .rx1011-druglabel{display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:700;background:#111827;color:#fff;border-radius:8px}
+
+/* ===== AMED (pink table block) ===== */
+.rx1011-amed-pink{background:#4F0079;border:2px solid #000;border-radius:10px;padding:16px;position:relative}
+.rx1011-amed-grid{display:grid;grid-template-columns:140px 1fr 1fr 1fr;gap:18px;align-items:start}
+.rx1011-amed-grid .rx1011-hdr{font-weight:800;text-align:center;margin-bottom:6px}
+.rx1011-amed-grid .rx1011-rowlbl{justify-self:start;font-weight:700}
+.rx1011-amed-pink .rx1011-qinput{background:#fff;color:#111;border:2px solid #000;border-radius:2px}
+
+/* ===== read-only scope ===== */
+#editScope.readonly input, #editScope.readonly textarea, #editScope.readonly select{pointer-events:none;opacity:.75}
+#editScope.readonly .rx1011-row--detail .copy-full,
+#editScope.readonly .rx1011-row--detail .copy-short,
+#editScope.readonly .rx1011-row--detail .rx1011-iconbtn--trash,
+#editScope.readonly #btnAddAmedRowEdit{pointer-events:none;opacity:.55}
+#editScope.readonly .rx1011-qinput{border-color:#2b2c2e !important}
+
+/* ===== floating edit button & bottom bar ===== */
+.rx1011-fab-edit{position:fixed;right:16px;top:16px;z-index:1001;background:#facc15;color:#111;border:2px solid #b08a00;border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.rx1011-fab-edit[hidden]{display:none !important}
+.rx1011-edit-actions{position:fixed;left:12px;right:12px;bottom:12px;z-index:1001;display:flex;justify-content:flex-end;gap:8px}
+.rx1011-edit-actions[hidden]{display:none !important}
+
+/* ===== purple frame wrapper ===== */
+:root{--amedFrame:#c96ad6;--amedFrameBorder:#5b2a67}
+.rx1011-amed-frame{background:var(--amedFrame);border:2px solid:var(--amedFrameBorder);border-radius:10px;padding:12px}
+.rx1011-amed-frame .rx1011-qinput{background:#fff;color:#111;border:2px solid #000;border-radius:2px}
+
+/* ===== DataTables (ถ้าต้องการสcope ให้ใส่ class .rx1011-dt บน table) ===== */
+.rx1011-dt{background:#2a2b2d;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.3);color:#f5f5f5}
+.rx1011-dt thead{background-color:#0057ff;color:#fff}
+
+/* ===== status pill ===== */
+#statusText{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:700;border:1px solid #4b5563;background:#1f2937;color:#e5e7eb}
+#statusText.on{background:linear-gradient(#6ee16e,#22c55e);border-color:#16a34a;color:#111}
+
+/* ===== POS back button ===== */
+.rx1011-pos-back{
+  position:sticky;top:12px;left:0;align-self:flex-start;display:inline-flex;gap:8px;align-items:center;
+  background:linear-gradient(#ef4444,#dc2626);color:#fff;border:1px solid #b91c1c;border-radius:12px;
+  padding:10px 14px;font-weight:700;line-height:1;cursor:pointer;
+  box-shadow:0 6px 16px rgba(220,38,38,.25),0 2px 0 rgba(0,0,0,.12);
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease
+}
+.rx1011-pos-back__icon{font-size:16px;transform:translateY(-.5px)}
+.rx1011-pos-back:hover{filter:brightness(1.05)}
+.rx1011-pos-back:active{transform:translateY(1px);box-shadow:0 4px 12px rgba(220,38,38,.22),0 1px 0 rgba(0,0,0,.12)}
+.rx1011-pos-back:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(239,68,68,.25),0 6px 16px rgba(220,38,38,.25)}
+
+
+  /* Utilities */
+.hidden{ display:none !important; }
+/* --- Report 10/11: scoped theme tokens (override app tokens) --- */
+/* --- Report 10/11: theme tokens (keep these always) --- */
+.container.r1011{
+  --bg:#0b3648; --panel:#0a2e41; --ink:#e7f0fb; --accent:#a3e635;
+  --input:#fff3a3; --edge:#12394b; --warn:#b91c1c; --warnbg:#3b0f0f;
+  color:var(--ink);
+}
+
+/* default (print + everything else): NO chrome */
+.container.r1011,
+.r1011 .wrap{
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* screen only: show the shell/panel chrome */
+@media screen{
+  .container.r1011{
+    background: var(--bg) !important;
+    border: 1px solid var(--edge) !important;
+  }
+  .r1011 .wrap{
+    background: var(--panel);
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    padding: 16px 18px;            /* keep your spacing for screen */
+    max-width: 1040px; margin: 18px auto;
+  }
+}
+
+/* beat the global .grid helper */
+.r1011 .grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.r1011 .row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.r1011 .label{ min-width:180px; font-weight:700; }
+
+/* neutralize global input !important styles */
+.r1011 .hl{
+  background:var(--input) !important;
+  color:#111 !important;
+  border:none !important;
+  outline:none !important;
+  border-radius:8px; padding:6px 10px;
+}
+.r1011 input[type="text"],
+.r1011 input[type="number"],
+.r1011 input[type="date"]{ font-size:16px; }
+.r1011 input[type="file"]{ color:var(--ink) !important; }
+
+/* buttons */
+.r1011 .btn{
+  background:#22c55e; color:#0b1424; border:1px solid #0e7d6a;
+  border-radius:12px; padding:10px 16px; cursor:pointer; font-size:16px;
+}
+.r1011 .btn.sec{ background:#0f2334; color:#e7f0fb; border-color:#1b3a52; }
+.r1011 .btn.big{
+  font-size:22px; padding:16px 22px; width:100%; border-radius:16px;
+  background:var(--accent); border:1px solid rgba(0,0,0,.2);
+}
+
+/* cards/tables inside report */
+.r1011 .card{
+  background:linear-gradient(180deg,#14344a,#0b2133) !important;
+  border:1px solid #1b3a52; border-radius:12px; padding:14px;
+}
+.r1011 .muted{ color:#a9bbcb; font-size:12px; }
+.r1011 hr.sep{ border:none; border-top:1px solid #1b3a52; margin:14px 0; }
+
+.r1011 table{ width:100%; border-collapse:collapse; }
+.r1011 th, .r1011 td{
+  border:1px solid #cbd5e1; padding:6px; text-align:center; background:#fff; color:#111;
+}
+.r1011 td.right{ text-align:right; }
+
+/* printing/pages */
+.r1011 .warn{
+  background:var(--warnbg); color:#ffdada; border:1px solid var(--warn);
+  border-radius:10px; padding:10px; margin-top:10px;
+}
+.r1011 .page{
+  page-break-after:always; background:#fff; color:#111;
+  border:1px solid #dbe3ec; margin:18px 0; padding:16px; border-radius:10px;
+}
+
+.r1011 .page table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;              /* make col widths stick */
+  /* column widths */
+  --c1: 7%;   /* ลำดับที่ */
+  --c2: 12%;  /* วัน เดือน ปี */
+  --c3: 12%;  /* จำนวน (แผง) */
+  --c4: 30%;  /* ชื่อ-สกุล */
+  --c5: 16%;  /* เลขบัตรประชาชน */
+  --c6: 10%;  /* ลายมือชื่อ */
+  --c7: 13%;   /* หมายเหตุ */
+}
+
+.r1011 .head{ border-bottom:2px solid #0b2133; margin-bottom:8px; }
+.r1011 .head h2{ margin:0 0 6px; }
+.r1011 .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:6px 0; }
+.r1011 .grid2 div{ border:1px solid #dbe3ec; padding:6px; border-radius:6px; background:#fff; }
+
+@media print{
+  .r1011 .no-print{ display:none; }
+  body{ background:#fff; }
+  .r1011 .page{ margin:0; border:none; border-radius:0; box-shadow:none; }
+}
+
+
+
+
+  /* header row */
+  .headerbar{display:flex;align-items:center;gap:30px}
+  .headerbar{ --title-size: 32px; }          /* set once */
+
+  .headerbar .title{ 
+    font-size: var(--title-size);
+    margin: 0; line-height: 1.1;
+  }
+  .headerbar .title-like{
+    font-size: var(--title-size);
+    font-weight: 800;                         /* bold like a heading */
+    display:flex; align-items:center; gap:10px;
+  }
+
+  /* keep the select normal-sized */
+  .headerbar .title-like select{ font-size:16px; }
+
+  /* =========================
+   ปุ่มเฟือง (gear button)
+========================= */
+.gear-btn{
+  /* layout */
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  line-height:1;
+
+  /* skin (พื้น default) */
+  background:#111827; /* ดำเทาเข้ม */
+  color:#e7f0fb;      /* หมึกอ่อน */
+  border:1px solid #2b3d4f; /* เส้นขอบกลมกลืน */
+  border-radius:10px;
+  cursor:pointer;
+
+  /* effects */
+  transition:transform .08s ease, background .15s ease, box-shadow .15s ease;
+}
+
+.gear-btn i{
+  font-size:16px; /* ขนาดไอคอนภายใน (Font Awesome) */
+}
+
+.gear-btn:hover{
+  background:#0f2536;
+  transform:translateY(-1px);
+}
+
+.gear-btn:active{
+  transform:translateY(0);
+}
+
+.gear-btn:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px rgba(163,230,53,.25); /* วงแหวนโทน accent */
+}
+
+/* ปุ่มเล็ก (ถ้าต้องการ) */
+.gear-btn.--sm{
+  width:30px;
+  height:30px;
+  border-radius:8px;
+}
+.gear-btn.--sm i{
+  font-size:14px;
+}
+
+/* ปิดใช้งาน */
+.gear-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.r1011 .gear-btn{
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;                  /* กันโดนยืด */
+}
+/* layout แถว "ได้มาจาก" ให้เรียงต่อกันไม่ห่อ */
+.r1011 .sku-field{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:nowrap;            /* อย่าให้เฟือง/ปุ่มตกบรรทัด */
+}
+
+/* บังคับความกว้างของแถบเหลืองให้พอดี ๆ (ทั้ง span#skuDisplay และ input#sku) */
+.r1011 #skuDisplay.hl,
+.r1011 #sku.hl{
+  display:inline-block;
+  width:clamp(320px, 45ch, 560px);  /* ยาวกว่าข้อความนิดหน่อย แต่ไม่ยาวเกินไป */
+}
+
+/* ให้กล่องอ่านอย่างเดียวดูเหมือนช่องปกติ */
+.r1011 .hl[readonly]{
+  background:var(--input) !important;
+  color:#111 !important;
+  cursor:default;
+  opacity:1;           /* อย่าให้ซีดเหมือน disabled */
+}
+/* ให้ “ได้มาจาก” ดูเหมือนช่องธรรมดา + มีเฟืองลอยด้านขวา */
+.r1011 .sku-wrap{
+  position: relative;
+  display: inline-block;
+  min-width: 320px;            /* กว้างพอ ๆ กับช่องผู้ผลิต */
+}
+.r1011 .sku-input{
+  display: block;
+  width: 100%;
+  padding-right: 38px;         /* เว้นที่ให้ไอคอน */
+  min-width: 320px;
+}
+
+/* ปุ่มเฟืองซ้อนในช่อง (โทนเบาเหมือนอยู่ใน input) */
+.r1011 .gear-btn.ghost{
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #0b1424;              /* เข้ม อ่านชัดบนพื้นเหลือง */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.r1011 .gear-btn.ghost:hover{
+  background: rgba(0,0,0,.08);
+}
+.r1011 .gear-btn.ghost:active{
+  background: rgba(0,0,0,.12);
+}
+/* === Unified width & layout fix === */
+.r1011{
+  /* ตั้งความกว้างคอนเทนต์ศูนย์กลางที่เดียว */
+  --content-max: 1120px;       /* ปรับเป็น 1040/1100/1200 ได้ตามใจ */
+  --gutter: 18px;
+}
+
+/* จัด container ให้กึ่งกลาง แล้วคุมความกว้างด้วย .wrap */
+.container.r1011{
+  display: flex;
+  justify-content: center;
+}
+.r1011 .wrap{
+  width: min(100%, var(--content-max));
+  margin: var(--gutter) auto;
+}
+
+/* ทุกการ์ดภายในยืดเต็มความกว้างของ .wrap */
+.r1011 .card,
+.r1011 .no-print{
+  width: 100%;
+  box-sizing: border-box;  /* นับ padding/border เข้า width */
+}
+
+/* แถว/กริด ยืดเต็ม และกันล้น */
+.r1011 .row{ 
+  width: 100%;
+  flex-wrap: wrap;
+}
+.r1011 .grid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr); /* กันคอนเทนต์ดันคอลัมน์ล้น */
+  gap: var(--gutter);
+}
+
+/* ช่องฟอร์ม/ป้ายให้ขยายได้เต็มคอลัมน์ */
+.r1011 select,
+.r1011 input,
+.r1011 .hl,
+.r1011 .label{
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* helper: ให้บล็อคไหนต้องการกิน 2 คอลัมน์เต็ม */
+.r1011 .-span-2{ grid-column: 1 / -1; }
+/* --- Normalize all gear buttons inside .kpi-table header --- */
+.kpi-table th .gear-btn {
+  /* reset layout */
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* box size fix */
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+
+  /* look/feel */
+  font-size: 14px;        /* ขนาดตัว ⚙ */
+  line-height: 1;
+  color: #9ca3af;         /* เทาๆ อ่อนนิดนึง */
+  background: rgba(0,0,0,.2);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 4px;
+  cursor: pointer;
+  vertical-align: middle; /* จัดแนวในบรรทัดเดียวกับข้อความหัวคอลัมน์ */
+}
+
+.kpi-table th .gear-btn:hover {
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  border-color: rgba(255,255,255,.4);
+}
+
+
