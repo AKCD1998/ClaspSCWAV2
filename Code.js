@@ -16,14 +16,15 @@ function doGet(e) {
   const t = HtmlService.createTemplateFromFile(page);
   t.SUPABASE_URL = SUPABASE_URL;
   t.SUPABASE_KEY = SUPABASE_KEY;
+  t.devTest = (e && e.parameter && e.parameter.devTest === '1');
 
   const output = t.evaluate()
     .setTitle('CiPData Lookup')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 
-  const faviconUrl = props.getProperty('FAVICON_URL') ||
-    'https://drive.google.com/uc?export=view&id=1I5reKeSKKPEUIWPl618VgIRiaDVw9TJd';
-  if (faviconUrl) output.setFaviconUrl(faviconUrl);
+  // const faviconUrl = props.getProperty('FAVICON_URL') ||
+  //   'https://lh3.googleusercontent.com/d/1pTdMn396kmXyW7atCNb7GAJ_q343Bb4C';
+  // if (faviconUrl) output.setFaviconUrl(faviconUrl);
   return output;
 }
 
