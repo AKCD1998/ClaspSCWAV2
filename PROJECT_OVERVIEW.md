@@ -37,20 +37,15 @@ The app currently includes:
 
 ## File Structure After This Refactor
 
-- `index.html`: Main DOM structure, external CDN dependencies, Supabase template config, Apps Script includes for extracted CSS/JS.
-- `index_styles.html`: Apps Script include copy of CSS extracted from `index.html`.
-- `index_app_scripts.html`: Apps Script include copy of client JavaScript extracted from `index.html`.
-- `assets/css/index.css`: Local-preview CSS asset matching `index_styles.html`.
-- `assets/js/app.js`: Local-preview JavaScript asset matching `index_app_scripts.html`.
+- `index.html`: Main DOM structure, external CDN dependencies, Supabase template config, page-local CSS, and page-local JavaScript blocks.
 - `local/server.js`: Lightweight local preview server that renders Apps Script includes for browser preview.
 - `local/mock-google-script.js`: Minimal local mock for `google.script.run` calls.
 - `package.json`: Adds `npm run dev` for local preview.
-- `.claspignore`: Keeps local preview assets and tooling out of Apps Script deployment while allowing extracted Apps Script include files to be pushed.
+- `.claspignore`: Keeps local preview assets and tooling out of Apps Script deployment.
 
 ## What Changed
 
-- Moved the index-specific CSS that was embedded in `index.html` into extracted files.
-- Moved all client-side JavaScript blocks from `index.html` into extracted files.
+- Attempted to move index-specific CSS and JavaScript out of `index.html`, then restored `index.html` to the original inline script/style layout because Google Apps Script HTML Service failed to parse the extracted single-script layout.
 - Kept the Supabase initialization inline in `index.html` because it depends on Apps Script template variables:
   - `<?= SUPABASE_URL ?>`
   - `<?= SUPABASE_KEY ?>`
@@ -65,6 +60,7 @@ The app currently includes:
 - Existing Supabase table/view/RPC names were not changed.
 - Existing Apps Script server function names were not changed.
 - Existing project files other than `index.html` were not refactored.
+- `index_app_scripts.html` and `index_styles.html` were removed after restoring the original `index.html` layout.
 
 ## Local Preview
 
@@ -101,7 +97,7 @@ clasp status
 clasp push
 ```
 
-The extracted Apps Script include files are `index_styles.html` and `index_app_scripts.html`. They should be pushed with the project because `index.html` includes them through Apps Script template syntax.
+`index.html` is currently self-contained again, except for existing Apps Script includes such as `styles.html` and `closeup.html`.
 
 ## Manual Test Checklist
 
@@ -111,11 +107,11 @@ The extracted Apps Script include files are `index_styles.html` and `index_app_s
 - Test summary screen presets, branch filter, search, hide-zero toggle, and CSV export.
 - Test follow-up screen date/branch filtering, status modal, undo, and JSON export.
 - Test `report1011` iframe and `rx1011` iframe after deploying to Apps Script because those depend on real `google.script.run`.
-- After `clasp push`, open the deployed Apps Script web app and verify `include('index_styles')` and `include('index_app_scripts')` resolve correctly.
+- After `clasp push`, open the deployed Apps Script web app and verify the chooser buttons still call `openPosApp`, `goLookup`, `openRx1011`, and `goReport1011`.
 
 ## Known Risks
 
-- `assets/css/index.css` and `assets/js/app.js` are local-preview mirrors of the Apps Script include files. Keep them in sync when editing.
+- Keep future extraction conservative: Apps Script HTML Service handled the original multi-script-block layout, but failed when the page JavaScript was combined into one extracted script include.
 - Local preview mocks `google.script.run`; it cannot fully validate Apps Script server behavior.
 - Real Supabase queries require valid `SUPABASE_URL` and `SUPABASE_KEY`.
 - Browser-level visual testing was limited to server/render checks unless a full browser test runner is added later.

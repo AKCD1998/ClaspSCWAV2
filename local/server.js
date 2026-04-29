@@ -24,14 +24,13 @@ function renderIndex() {
   let html = readText('index.html');
 
   html = html
-    .replace(/<style>\s*<\?!=\s*include\('styles'\);\s*\?>\s*<\?!=\s*include\('index_styles'\);\s*\?>\s*<\/style>/s,
-      `<style>\n${readText('styles.html')}\n</style>\n<link rel="stylesheet" href="/assets/css/index.css">`)
-    .replace(/<script>\s*<\?!=\s*include\('index_app_scripts'\);\s*\?>\s*<\/script>/s,
-      '<script src="/local/mock-google-script.js"></script>\n<script src="/assets/js/app.js"></script>')
+    .replace(/<\?!=\s*include\('styles'\);\s*\?>/g, readText('styles.html'))
     .replace(/<\?!= include\('closeup'\); \?>/g, readText('closeup.html'))
     .replace(/<\?!=\s*include\('styles'\);\s*\?>/g, '')
     .replace(/<\?= SUPABASE_URL \?>/g, process.env.SUPABASE_URL || 'https://example.supabase.co')
     .replace(/<\?= SUPABASE_KEY \?>/g, process.env.SUPABASE_KEY || 'local-preview-anon-key');
+
+  html = html.replace('</body>', '<script src="/local/mock-google-script.js"></script>\n</body>');
 
   return html;
 }

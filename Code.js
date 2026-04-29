@@ -17,9 +17,14 @@ function doGet(e) {
   t.SUPABASE_URL = SUPABASE_URL;
   t.SUPABASE_KEY = SUPABASE_KEY;
 
-  return t.evaluate()
+  const output = t.evaluate()
     .setTitle('CiPData Lookup')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+
+  const faviconUrl = props.getProperty('FAVICON_URL') ||
+    'https://drive.google.com/uc?export=view&id=1I5reKeSKKPEUIWPl618VgIRiaDVw9TJd';
+  if (faviconUrl) output.setFaviconUrl(faviconUrl);
+  return output;
 }
 
 /** Allow <?!= include('file') ?> within templates */
@@ -792,6 +797,3 @@ function generateReport(opts){
   const url = 'https://docs.google.com/document/d/' + doc.getId() + '/export?format=pdf';
   return { url, count: rows.length };
 }
-
-
-
