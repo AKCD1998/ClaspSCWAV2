@@ -9,7 +9,7 @@ function doGet(e) {
 
   // รับชื่อหน้า จากพารามิเตอร์ (ค่าเริ่มต้น: index)
   const paramPage = e && e.parameter && e.parameter.page;
-  const whitelist = ['index', 'rx1011', 'report1011', 'closeup']; // เพิ่มชื่อไฟล์ html ได้ที่นี่
+  const whitelist = ['index', 'closeup']; // เพิ่มชื่อไฟล์ html ได้ที่นี่
   const page = whitelist.includes(paramPage) ? paramPage : 'index';
 
   // inject config เข้า template ของหน้านั้น
@@ -33,19 +33,7 @@ function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }
 
-/*** (คงไว้ได้) คืน HTML ของไฟล์ report1011.html เป็นสตริง ***/
-function getReport1011Html(){
-  return HtmlService.createHtmlOutputFromFile('report1011').getContent();
-}
 
-/** คืน HTML ของไฟล์ rx1011.html (พร้อมแทนค่า SUPABASE_*) */
-function getRx1011Html() {
-  const props = PropertiesService.getScriptProperties();
-  const t = HtmlService.createTemplateFromFile('rx1011');  // compile as template
-  t.SUPABASE_URL = props.getProperty('SUPABASE_URL');
-  t.SUPABASE_KEY = props.getProperty('SUPABASE_KEY');
-  return t.evaluate().getContent(); // return HTML string
-}
 
 // ดึงข้อมูลจาก Supabase ทีละหน้า (ใช้ header Range ของ PostgREST)
 // จะ loop ต่อหน้าๆ จนกว่าจะหมด แล้วรวมผลทั้งหมดคืนเป็น array เดียว

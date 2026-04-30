@@ -43,23 +43,15 @@
       </div>
       <!-- 🔹 ปุ่มใหม่: Rx1011 Movements -->
       <div class="card">
-        <h3>ไว้เดี๋ยวคิดออกค่อยทำ</h3>
+        <h3>บันทึกรับเข้า/โอน/ขาย (Rx1011)</h3>
         <button class="btn" onclick="openRx1011()">เริ่มต้นใช้งาน</button>
       </div>
       <div class="card">
         <h3>สร้างรายงาน ขย. 10/11</h3>
-        <button class="btn" onclick="goReport1011()">ยังไม่เสร็จ อย่าคลิ๊ก เดี๋ยวก็มีอันใหม่มาแทนแล้วด้วย รู้จากวงในมาแล้วล่ะ แต่ยังพูดไม่ได้</button>
+        <button class="btn" onclick="goReport1011()">เริ่มต้นใช้งาน</button>
       </div>
     </div>
   </div>
-<div id="screen-report1011" class="container--wide hidden pushable">
-  <iframe src="about:blank" id="r1011Frame" style="width:100%;height:85vh;border:1px solid #1b3a52;border-radius:12px;background:#fff"></iframe>
-</div>
-<!-- SCREEN: RX1011 -->
-<div id="screen-rx1011" class="container--wide hidden pushable">
-  <iframe id="rx1011Frame"
-          style="width:100%;height:85vh;border:1px solid #1b3a52;border-radius:12px;background:#fff"></iframe>
-</div>
   <!-- LOOKUP -->
   <div
   class="container--wide hidden pushable"id="screen-lookup"style="max-width: 2000px;width:100%;">
@@ -239,6 +231,7 @@
       <a href="#" onclick="goFollowup(event)">โทรติดตามอาการผู้ป่วย</a>
       <a href="#" onclick="goReport1011(event)">สร้างรายงาน ขย. 10/11</a>
       <a href="#" onclick="openRx1011(event)">บันทึกรับเข้า/โอน/ขาย (Rx1011)</a>
+      <a href="#" onclick="if(window.__runConnectivityTests) { window.__runConnectivityTests(); } else { alert('Test Runner not loaded'); }; closeSidebar(); event.preventDefault();">Admin UI Test</a>
     </nav>
   </aside>
   <div id="backdrop" onclick="closeSidebar()"></div>
@@ -536,9 +529,7 @@
   </div>
 </div>
 <!-- =================== END FOLLOW‑UP DROP‑IN SECTION =================== -->
-<script>
-  <?!= include('scripts'); ?>
-</script>
+<?!= include('scripts'); ?>
 
   <!-- =================== BASELINE CONNECTIVITY TEST RUNNER =================== -->
 <script>
@@ -570,7 +561,7 @@
     // 2. Check DOM Elements
     const elements = [
       '#screen-chooser', '#screen-lookup', '#screen-summary',
-      '#screen-report1011', '#screen-rx1011', '#screen-followup',
+      '#screen-followup',
       '#tbl', '#sumTbl', '#fuDueTbl', '#fuDoneTbl'
     ];
     elements.forEach(sel => {
@@ -636,13 +627,14 @@
   // Expose global function
   window.__runConnectivityTests = runTests;
 
-  // Auto-run if query param is set (injected by GAS server)
+  // Auto-run logic disabled by user request. Can be run from sidebar.
+  /*
   var __devTestEnabled = false;
   try { __devTestEnabled = <?= devTest ?>; } catch(e) {}
   if (__devTestEnabled || window.location.search.includes('devTest=1')) {
-    // delay slightly to allow DOM to settle
     setTimeout(runTests, 1000);
   }
+  */
 })();
 </script>
 </body>
