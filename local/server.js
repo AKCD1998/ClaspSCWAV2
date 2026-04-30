@@ -26,6 +26,7 @@ function renderIndex() {
   html = html
     .replace(/<\?!=\s*include\('styles'\);\s*\?>/g, readText('styles.html'))
     .replace(/<\?!= include\('closeup'\); \?>/g, readText('closeup.html'))
+    .replace(/<\?!=\s*include\('scripts'\);\s*\?>/g, readText('scripts.html'))
     .replace(/<\?!=\s*include\('styles'\);\s*\?>/g, '')
     .replace(/<\?= SUPABASE_URL \?>/g, process.env.SUPABASE_URL || 'https://example.supabase.co')
     .replace(/<\?= SUPABASE_KEY \?>/g, process.env.SUPABASE_KEY || 'local-preview-anon-key');
