@@ -1013,7 +1013,7 @@ function csv(s){
 
 // show exactly one screen at a time
 function showScreen(idToShow){
-   ['screen-chooser','screen-lookup','screen-summary','screen-followup'] .forEach(id => {
+   ['screen-chooser','screen-lookup','screen-summary','screen-followup','screen-report1011','screen-rx1011'] .forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
     el.classList.toggle('hidden', id !== idToShow);
@@ -1023,12 +1023,45 @@ function showScreen(idToShow){
 
 function goReport1011(e){
   e?.preventDefault?.();
-  window.open('https://akcd1998.github.io/RepWeb1011/#/', '_blank');
+  showScreen('screen-report1011');
+  const f = document.getElementById('r1011Frame');
+
+  withOverlay(new Promise((resolve,reject) => {
+    // when iframe finishes parsing, resolve to hide overlay
+    f.onload = () => resolve();
+
+    // fetch html from server side
+    google.script.run
+      .withSuccessHandler(html => {
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        f.src = url;  // overlay stays until onload fires
+      })
+      .withFailureHandler(err => { console.error(err); reject(err); })
+      .getReport1011Html();
+  }), { text: "กำลังโหลดแบบฟอร์มรายงาน..." })
+  .catch(() => alert('โหลดรายงานไม่สำเร็จ'));
 }
 
 function openRx1011(e){
   e?.preventDefault?.();
-  window.open('https://akcd1998.github.io/RepWeb1011/#/', '_blank');
+  showScreen('screen-rx1011'); // your helper that shows one screen
+
+  const f = document.getElementById('rx1011Frame');
+
+  withOverlay(new Promise((resolve, reject) => {
+    f.onload = () => resolve(); // hide overlay when iframe finished parsing
+
+    google.script.run
+      .withSuccessHandler(html => {
+        const blob = new Blob([html], { type: 'text/html' });
+        const url  = URL.createObjectURL(blob);
+        f.src = url;             // loads the compiled rx1011.html
+      })
+      .withFailureHandler(err => { console.error(err); reject(err); })
+      .getRx1011Html();          // <-- the function you just added in Code.gs
+  }), { text: "กำลังโหลด Rx1011..." })
+  .catch(() => alert('โหลด Rx1011 ไม่สำเร็จ'));
 }
 
 

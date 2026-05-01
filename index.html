@@ -529,7 +529,9 @@
   </div>
 </div>
 <!-- =================== END FOLLOW‑UP DROP‑IN SECTION =================== -->
-<?!= include('scripts'); ?>
+<script>
+<?!= includeRaw('scripts'); ?>
+</script>
 
   <!-- =================== BASELINE CONNECTIVITY TEST RUNNER =================== -->
 <script>
@@ -630,7 +632,7 @@
   // Auto-run logic disabled by user request. Can be run from sidebar.
   /*
   var __devTestEnabled = false;
-  try { __devTestEnabled = <?= devTest ?>; } catch(e) {}
+  try { __devTestEnabled = ('<?= devTest ?>' === 'true'); } catch(e) {}
   if (__devTestEnabled || window.location.search.includes('devTest=1')) {
     setTimeout(runTests, 1000);
   }

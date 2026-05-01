@@ -20,15 +20,24 @@ function readText(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), 'utf8');
 }
 
+function expandIncludes(html) {
+  let previous;
+  do {
+    previous = html;
+    html = html
+      .replace(/<\?!=\s*includeRaw\('([A-Za-z0-9_-]+)'\);\s*\?>/g, (_, name) => readText(`${name}.html`))
+      .replace(/<\?!=\s*include\('([A-Za-z0-9_-]+)'\);\s*\?>/g, (_, name) => readText(`${name}.html`));
+  } while (html !== previous);
+  return html;
+}
+
 function renderIndex() {
   let html = readText('index.html');
 
-  html = html
-    .replace(/<\?!=\s*include\('styles'\);\s*\?>/g, readText('styles.html'))
-    .replace(/<\?!= include\('closeup'\); \?>/g, readText('closeup.html'))
-    .replace(/<\?!=\s*include\('styles'\);\s*\?>/g, '')
+  html = expandIncludes(html)
     .replace(/<\?= SUPABASE_URL \?>/g, process.env.SUPABASE_URL || 'https://example.supabase.co')
-    .replace(/<\?= SUPABASE_KEY \?>/g, process.env.SUPABASE_KEY || 'local-preview-anon-key');
+    .replace(/<\?= SUPABASE_KEY \?>/g, process.env.SUPABASE_KEY || 'local-preview-anon-key')
+    .replace(/<\?= devTest \?>/g, 'false');
 
   html = html.replace('</body>', '<script src="/local/mock-google-script.js"></script>\n</body>');
 

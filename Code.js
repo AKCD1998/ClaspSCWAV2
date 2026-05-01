@@ -30,7 +30,12 @@ function doGet(e) {
 
 /** Allow <?!= include('file') ?> within templates */
 function include(filename) {
-  return HtmlService.createHtmlOutputFromFile(filename).getContent();
+  return HtmlService.createTemplateFromFile(filename).evaluate().getContent();
+}
+
+/** Include raw file text inside a surrounding <script> tag. */
+function includeRaw(filename) {
+  return HtmlService.createTemplateFromFile(filename).getRawContent();
 }
 
 
