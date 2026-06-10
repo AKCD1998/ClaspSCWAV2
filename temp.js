@@ -280,7 +280,7 @@ const ACCUM_MODE_KEY  = 'cipdata_accum_mode';
     /* ---------- Nav / Sidebar ---------- */
     
     function openPosApp(){
-      window.open('https://script.google.com/macros/s/AKfycbw9FhFQ0nZ6fby9ebFOsJyEatnajQeI7Xm2f8KKx-2hw0U7BRuWgJE2QDa0oMjqqJlW/exec','_blank');
+      window.open('https://script.google.com/macros/s/AKfycbxj11P8kv2Ps_cPUTdO_4ge-Luj11ucFgNB099kXI-XFYheYrQPe5Q1erTDCDxE137c/exec','_blank');
     }
     function goLookup(){
       document.getElementById('screen-chooser').classList.add('hidden');
