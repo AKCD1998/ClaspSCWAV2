@@ -1,0 +1,12 @@
+services:
+  - type: static
+    name: cipdata-chooser-web
+    runtime: static
+    rootDir: apps/chooser-web
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    autoDeploy: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

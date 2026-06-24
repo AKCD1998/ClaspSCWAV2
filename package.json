@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "dev": "node local/server.js"
+    "dev": "node local/server.js",
+    "dev:chooser": "npm --prefix apps/chooser-web run dev",
+    "build:chooser": "npm --prefix apps/chooser-web run build",
+    "preview:chooser": "npm --prefix apps/chooser-web run preview"
   },
   "devDependencies": {}
 }

@@ -1,0 +1,5 @@
+.claude/
+apps/**/node_modules/
+apps/**/dist/
+apps/**/.env
+npm-debug.log*
