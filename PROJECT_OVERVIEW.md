@@ -52,6 +52,25 @@ The app currently includes:
 - Preserved existing HTML structure, IDs, classes, inline event handlers, Apps Script template syntax, Supabase calls, and `google.script.run` calls.
 - Added a no-dependency local preview server.
 
+## Current Migration Status
+
+As of June 25, 2026, the migration is only partially complete:
+
+- The full CiPData workflow still runs from the Google Apps Script app in `index.html`.
+- A separate Render-targeted chooser app now exists under `apps/chooser-web`.
+- The chooser app is intended to replace only the landing menu first, while deeper workflows still point to existing external destinations.
+- `VITE_LINK_LOOKUP` is still intentionally unset because the old lookup flow is an in-page GAS screen (`goLookup()`), not a separate standalone URL.
+
+## Session Progress Update (June 25, 2026)
+
+- Verified that `apps/chooser-web` builds successfully with `npm run build`.
+- Confirmed that `render.yaml` is configured for a Render static site with `rootDir: apps/chooser-web` and `staticPublishPath: dist`.
+- Identified the failed Render deploy cause: Render was building an older remote commit that did not yet contain `apps/chooser-web`.
+- Cleaned the latest local commit so it now contains source files only, excluding generated `node_modules` and `dist`.
+- Added `.gitignore` rules for chooser build artifacts and dependencies.
+- Rewrote the latest commit message to `Add Render-ready chooser static site`.
+- Remaining step: push the cleaned commit to `origin/master`, then retry the Render static-site deploy.
+
 ## What Was Intentionally Not Changed
 
 - Business logic was not rewritten.
@@ -98,6 +117,16 @@ clasp push
 ```
 
 `index.html` is currently self-contained again, except for existing Apps Script includes such as `styles.html` and `closeup.html`.
+
+## Render Chooser Deploy Notes
+
+For the separate chooser app deployment on Render:
+
+- Root Directory: `apps/chooser-web`
+- Build Command: `npm install && npm run build`
+- Publish Directory: `dist`
+- Add a rewrite rule from `/*` to `/index.html`
+- Set `VITE_LINK_*` environment variables in Render as needed
 
 ## Manual Test Checklist
 
