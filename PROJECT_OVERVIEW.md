@@ -59,7 +59,7 @@ As of June 25, 2026, the migration is only partially complete:
 - The full CiPData workflow still runs from the Google Apps Script app in `index.html`.
 - A separate Render-targeted chooser app now exists under `apps/chooser-web`.
 - The chooser app is intended to replace only the landing menu first, while deeper workflows still point to existing external destinations.
-- `VITE_LINK_LOOKUP` is still intentionally unset because the old lookup flow is an in-page GAS screen (`goLookup()`), not a separate standalone URL.
+- `VITE_LINK_LOOKUP` now defaults to the dedicated Render lookup SPA and can still be overridden per environment.
 
 ## Session Progress Update (June 25, 2026)
 

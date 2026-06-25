@@ -26,7 +26,7 @@ const items = [
     id: "lookup",
     title: "สำหรับกรอกข้อมูล",
     description: "ปลายทางชั่วคราวสำหรับ lookup workflow ระหว่าง migration",
-    href: readEnv("VITE_LINK_LOOKUP", ""),
+    href: readEnv("VITE_LINK_LOOKUP", "https://sc-cipdata-lookup-web.onrender.com/"),
     target: externalTarget,
     accent: "emerald",
   },
